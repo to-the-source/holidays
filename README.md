@@ -1,30 +1,31 @@
-# US Federal Holidays
+# ~US Federal~ Source Holidays
 
-Builds and returns a list of all US federal holidays for a given year, and
+Builds and returns a list of all ~US federal~ Source holidays for a given year, and
 provides a helper method to determine if a given date is a US federal holiday.
 Handles shifting holidays to the nearest weekday if the holiday falls on a
 weekend.
 
-US federal holidays are [as defined by OPM](https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/).
+- US federal holidays are [as defined by OPM](https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/).
+- Source Holidays include some US federal Holidays plus a couple of adjacent days
 
 ### Installation
 
 ```
-npm install @18f/us-federal-holidays
+npm install https://github.com/to-the-source/holidays
 ```
 
 Requires Node.js 10 or higher.
 
 ### Usage
 
-To get a list of all US federal holidays in a given year, use the `allForYear`
+To get a list of all ~US federal~ Source holidays in a given year, use the `allForYear`
 method. If no year is passed in, uses the current year.
 
 ```javascript
-const fedHolidays = require('@18f/us-federal-holidays');
+const sourceHolidays = require('holidays');
 
 const options = { shiftSaturdayHolidays: true, shiftSundayHolidays: true };
-const holidays = fedHolidays.allForYear(2016, options);
+const holidays = sourceHolidays.allForYear(2016, options);
 
 // Returns
 [ { name: 'New Year\'s Day',
@@ -68,11 +69,11 @@ method. If no `start` date is provided in, uses the current date. If the end
 date is omitted, one year from the current date is used.
 
 ```javascript
-const fedHolidays = require('@18f/us-federal-holidays');
+const sourceHolidays = require('holidays');
 const start = new Date('2016-02-13');
 const end = new Date('2017-07-23');
 const options = { shiftSaturdayHolidays: true, shiftSundayHolidays: true };
-const holidays = fedHolidays.federalHolidaysInRange(start, end, options);
+const holidays = sourceHolidays.holidaysInRange(start, end, options);
 
 // Returns
 [ { name: 'Washington\'s Birthday',
@@ -128,14 +129,14 @@ To determine if a date is a federal holiday, use the `isAHoliday` method. If no
 argument is provided, defaults to the current date:
 
 ```javascript
-const fedHolidays = require("@18f/us-federal-holidays");
+const sourceHolidays = require("holidays");
 
 const options = {
   shiftSaturdayHolidays: true,
   shiftSundayHolidays: true,
   utc: false
 };
-const isAHoliday = fedHolidays.isAHoliday(myDate, options);
+const isAHoliday = sourceHolidays.isAHoliday(myDate, options);
 // Returns true or false
 ```
 
