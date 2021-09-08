@@ -40,7 +40,7 @@ const getLastDayOf = (day, month, year) => {
   return result;
 };
 
-const allFederalHolidaysForYear = (
+const allSourceHolidaysForYear = (
   year = new Date().getFullYear(),
   { shiftSaturdayHolidays = true, shiftSundayHolidays = true } = {}
 ) => {
@@ -54,18 +54,22 @@ const allFederalHolidaysForYear = (
 
   // Birthday of Martin Luther King, Jr.
   // Third Monday of January; fun fact: actual birthday is January 15
+  /*   
   holidays.push({
     name: `Birthday of Martin Luther King, Jr.`,
     date: getNthDayOf(3, 1, 1, year)
-  });
+  }); 
+  */
 
   // Washington's Birthday
   // Third Monday of February; fun fact: actual birthday is February 22
   // Fun fact 2: officially "Washington's Birthday," not "President's Day"
+  /*
   holidays.push({
     name: `Washington's Birthday`,
     date: getNthDayOf(3, 1, 2, year)
   });
+  */
 
   // Memorial Day
   // Last Monday of May
@@ -97,16 +101,20 @@ const allFederalHolidaysForYear = (
 
   // Columbus Day
   // Second Monday in October
+  /*
   holidays.push({
     name: `Columbus Day`,
     date: getNthDayOf(2, 1, 10, year)
   });
+  */
 
   // Veterans Day
+  /*
   holidays.push({
     name: `Veterans Day`,
     date: getDateFor({ day: 11, month: 11, year })
   });
+  */
 
   // Thanksgiving Day
   // Fourth Thursday of November
@@ -115,11 +123,31 @@ const allFederalHolidaysForYear = (
     date: getNthDayOf(4, 4, 11, year)
   });
 
+  // Day After Thanksgiving
+  // Fourth Friday of November
+  holidays.push({
+    name: `Day After Thanksgiving`,
+    date: getNthDayOf(4, 5, 11, year)
+  });
+
+  // Christmas Eve
+  holidays.push({
+    name: `Christmas Eve`,
+    date: getDateFor({ day: 24, month: 12, year })
+  });
+
   // Christmas Day
   holidays.push({
     name: `Christmas Day`,
     date: getDateFor({ day: 25, month: 12, year })
   });
+
+  // new Year's Eve
+  holidays.push({
+    name: `New Year's Eve`,
+    date: getDateFor({ day: 31, month: 12, year })
+  });
+
 
   return holidays.map(holiday => {
     let date = dayjs(holiday.date);
@@ -155,8 +183,8 @@ const isAHoliday = (
 
   // Get the holidays this year, plus check if New Year's Day of next year is
   // observed on December 31 and if so, add it to this year's list.
-  const allForYear = allFederalHolidaysForYear(year, shift);
-  const nextYear = allFederalHolidaysForYear(year + 1, shift);
+  const allForYear = allSourceHolidaysForYear(year, shift);
+  const nextYear = allSourceHolidaysForYear(year + 1, shift);
   allForYear.push(nextYear[0]);
 
   // If any dates in this year's holiday list match the one passed in, then
@@ -172,7 +200,7 @@ const getOneYearFromNow = () => {
   return future;
 };
 
-const federalHolidaysInRange = (
+const holidaysInRange = (
   startDate = new Date(),
   endDate = getOneYearFromNow(),
   options
@@ -182,13 +210,13 @@ const federalHolidaysInRange = (
 
   const candidates = [];
   for (let year = startYear; year <= endYear; year += 1) {
-    candidates.push(...allFederalHolidaysForYear(year, options));
+    candidates.push(...allSourceHolidaysForYear(year, options));
   }
   return candidates.filter(h => h.date >= startDate && h.date <= endDate);
 };
 
 module.exports = {
   isAHoliday,
-  allForYear: allFederalHolidaysForYear,
-  inRange: federalHolidaysInRange
+  allForYear: allSourceHolidaysForYear,
+  inRange: holidaysInRange
 };

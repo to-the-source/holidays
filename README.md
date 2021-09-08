@@ -73,7 +73,7 @@ const sourceHolidays = require('holidays');
 const start = new Date('2016-02-13');
 const end = new Date('2017-07-23');
 const options = { shiftSaturdayHolidays: true, shiftSundayHolidays: true };
-const holidays = sourceHolidays.holidaysInRange(start, end, options);
+const holidays = sourceHolidays.inRange(start, end, options);
 
 // Returns
 [ { name: 'Washington\'s Birthday',
